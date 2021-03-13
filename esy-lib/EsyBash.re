@@ -50,7 +50,9 @@ let normalizePathForCygwin = path =>
     let rootPath = getCygPath();
     let ic =
       Unix.open_process_in(
-        Fpath.to_string(rootPath) ++ " \"" ++ path ++ " \"",
+        Filename.quote_command(
+          Fpath.to_string(rootPath) ++ " \"" ++ path ++ " \"", []
+        )
       );
     let result = String.trim(input_line(ic));
     let () = close_in(ic);
